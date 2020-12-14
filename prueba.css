@@ -1,0 +1,329 @@
+/*Fuente para tipografía*/
+@import url("https://fonts.googleapis.com/css?family=Press+Start+2P");
+
+:root {
+  /* Variables encargadas de sumar y mostrar los puntos de las dianas normales y especiales. */
+  --bullseye-points: 1;
+  --bullseye-points-str: "1";
+  --bullseye-special-points: 3;
+  --bullseye-special-points-str: "3";
+  --bullseye-size: 7rem;
+  --bullseye-shadow-size: 1rem;
+  --bullseye-total-size: calc(
+    var(--bullseye-size) + var(--bullseye-shadow-size) * 2
+  );
+  --bullseye-color: red;
+  --bullseye-special-color: gold;
+  --total-bullseye: 8;
+  --bullseye-animation-duration: 2.4s;
+  --score-delay: calc(
+    var(--bullseye-animation-duration) * var(--total-bullseye)
+  );
+  --bg-color: blue;
+  --text-color: white;
+  --accent-color: lime;
+
+  /* Inicializamos el contador de puntos a 0. */
+  counter-reset: points;
+
+  /* Definimos nuestro cursor apuntando a una imagen con la función url(), tal y como
+  * haríamos en background-image. Antes del SVG añadimos "data:image/svg+xml;utf8,"
+  * para que el navegador sepa que se trata de una imagen de tipo SVG.*/  
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 86 86" width="42" height="42"><path d="M42.998 0C19.252 0 0 19.252 0 43c0 23.749 19.252 43 42.998 43C66.748 86 86 66.749 86 43 86 19.252 66.748 0 42.998 0zM46.5 77.825V58.5h-7.002v19.325C22.965 76.184 9.818 63.035 8.176 46.5H27.5v-7.002H8.176C9.818 22.964 22.965 9.816 39.498 8.175V27.5H46.5V8.175c16.537 1.642 29.684 14.79 31.326 31.323H58.5V46.5h19.326C76.184 63.035 63.037 76.182 46.5 77.825z" fill="%2353FF45"/></svg>')
+      21 21,
+    crosshair;
+}
+
+*,
+*:before,
+*:after {
+  /* Hacemos que todos los elementos hereden el cursor que hemos definido.
+   * Si no lo hiciéramos, los &lt;label&gt; seguirían teniendo el cursor por defecto.*/
+  box-sizing: border-box;
+  cursor: inherit;
+}
+
+body {
+  padding: 15px;
+
+  /* Evitamos que las dianas provoquen la aparición de la barra de scroll cuando están fuera del viewport. */
+  overflow: hidden;
+
+  /*Fuente retro*/
+  font-family: "Press Start 2P", sans-serif;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+
+  /* Evitamos que el usuario seleccione partes de la web sin querer mientras hace clic con el ratón. */
+  user-select: none;
+}
+
+/* El enlace de empezar partida hacemos que ocupe toda la pantalla. */
+#start {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  text-align: center;
+  text-decoration: none;
+  color: var(--text-color);
+
+  /* Añadimos una sombra retro. */
+  text-shadow: 2px 2px 0 red;
+  background-color: var(--bg-color);
+}
+
+/* Cuando el jugador hace clic en el enlace ocultamos el enlace para mostrar el juego. */
+#stage:target #start {
+  display: none;
+}
+
+/* Animamos el texto de #start con un efecto de pulso. */
+.start-text {
+  animation: pulse 1.2s ease-out infinite;
+}
+
+
+.start-emoji {
+  display: inline-block;
+  margin-left: 0.5em;
+  font-size: 1.4em;
+  text-shadow: none;
+}
+
+/* Ocultamos los checkbox. */
+.bullseye-input {
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+}
+
+/* Incrementamos el valor del contador en tantos puntos como hayamos definido
+ * en nuestra variable cuando el checkbox está marcado.
+ */
+.bullseye-input:checked {
+  counter-increment: points var(--bullseye-points);
+}
+
+/* Cuando la diana es especial, sobreescribimos el número puntos a sumar en el contador. */
+.bullseye-input.special:checked {
+  counter-increment: points var(--bullseye-special-points);
+}
+
+.bullseye {
+  --points: var(--bullseye-points);
+  position: absolute;
+  top: calc(-1 * var(--bullseye-total-size));
+
+  /*Animaciones*/
+  animation-timing-function: ease-out;
+  animation-duration: var(--bullseye-animation-duration);
+
+  /* Añadimos un delay a la animación de cada diana correspondiente a su índice multiplicado
+  * por la duración de la animación de caída.*/
+  animation-delay: calc(
+    var(--bullseye-animation-duration) * (var(--index) - 1)
+  );
+}
+
+/* Activamos la animación de las dianas cuando el jugador ha hecho clic en #start. Empieza el juego. */
+#stage:target .bullseye {
+  animation-name: bullseye-movement;
+}
+
+/* Definimos la variable índice de cada diana y le asignamos una posición arbitraria
+ * para dar una sensación de aleatoriedad.*/
+.bullseye:nth-of-type(1) {
+  --index: 1;
+  left: 70%;
+}
+.bullseye:nth-of-type(2) {
+  --index: 2;
+  left: 10%;
+}
+.bullseye:nth-of-type(3) {
+  --index: 3;
+  left: 80%;
+}
+.bullseye:nth-of-type(4) {
+  --index: 4;
+  left: 55%;
+}
+.bullseye:nth-of-type(5) {
+  --index: 5;
+  left: 5%;
+}
+.bullseye:nth-of-type(6) {
+  --index: 6;
+  left: 35%;
+}
+.bullseye:nth-of-type(7) {
+  --index: 7;
+  left: 40%;
+}
+.bullseye:nth-of-type(8) {
+  --index: 8;
+  left: 85%;
+}
+
+/* Definimos la variable índice de cada diana y le asignamos una posición arbitraria
+ * para dar una sensación de aleatoriedad. Da un mejor efecto*/
+.bullseye-input:checked + .bullseye {
+  animation-play-state: paused;
+
+  /* Cuando una diana se ha marcado, ya no permitimos que se desmarque. */
+  pointer-events: none;
+}
+
+.bullseye.special {
+  --points: var(--bullseye-special-points);
+}
+
+/* El pseudo elemento :before es la diana. */
+.bullseye:before {
+  /* Definimos la variable que dará el color al radial-gradient. */
+  --color: var(--bullseye-color);
+  content: "";
+  display: block;
+
+  /* Definimos el tamaño de las dianas */
+  width: var(--bullseye-size);
+  height: var(--bullseye-size);
+
+  /* Hacemos la diana circular. */
+  border-radius: 50%;
+
+  /* Definimos el radial-gradient con el color que le hemos especificado. */
+  background-image: radial-gradient(
+    closest-side,
+    var(--color) 20%,
+    white 0,
+    white 40%,
+    var(--color) 0,
+    var(--color) 60%,
+    white 0,
+    white 80%,
+    var(--color) 0
+  );
+  box-shadow: 4px 4px var(--bullseye-shadow-size) rgba(0, 0, 0, 0.4);
+}
+
+.bullseye.special:before {
+  /* En las dianas especiales sobreescribimos el color que se usa en el radial-gradient. */
+  --color: var(--bullseye-special-color);
+}
+
+/* Cuando hemos acertado sobre una diana, cambiamos el color del radial-gradient
+* a grey, hacemos que desaparezca con opacity y disminuimos un poco su tamaño
+* con una animación.*/
+.bullseye-input:checked + .bullseye:before {
+  --color: grey;
+  animation: bullseye-fadeout 0.8s ease-in-out forwards;
+}
+
+/* Mostramos el número de puntos en el :after de la diana. */
+/* El pseudo elemento :after es el "+1" que aparece cuando acertamos en una diana. */
+.bullseye:after {
+/* Creamos una variable con los puntos a mostrar. */
+  --points-str: var(--bullseye-points-str);
+
+  /* Mostramos el número de puntos que corresponden a esta diana. */
+  content: "+" var(--points-str);
+
+  /* Posicionamos el elemento en el centro de la diana. */ 
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 1.7rem;
+
+  /*Añadimos sombra*/
+  text-shadow: 2px 2px 0px var(--accent-color);
+  opacity: 0;
+  transform: translate(-50%, -50%);
+}
+
+/* Cuando la diana es especial, sobreescribimos los puntos a mostrar en el :after de la diana. */
+.bullseye.special:after {
+  --points-str: var(--bullseye-special-points-str);
+}
+
+/* Cuando el jugador acierta sobre una diana, le añadimos una animación para que aparezca el "+1". */
+.bullseye-input:checked + .bullseye:after {
+  animation: points-up 1.5s forwards;
+}
+
+/* Añadimos la animación al marcador. Nótese el delay que hemos calculado
+ * en el bloque de variables. Importante añadir forwards para que la animación
+ * se quede en su estado final al acabar.*/
+#score {
+  /* Posicionamos el marcador en la parte baja del viewport. */
+  position: absolute;
+  bottom: 2rem;
+  left: 0;
+  right: 0;
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  color: var(--accent-color);
+
+  /*Sombra retro*/
+  text-shadow: 2px 2px 0px red;
+  /* Permitimos que el jugador pueda hacer clic sobre una diana que está pasando por debajo del contador. */
+  pointer-events: none;
+}
+
+/* Activamos la animación del marcador cuando el jugador ha hecho clic en #start. */
+#stage:target #score {
+  animation: score-end 0.4s ease-in-out var(--score-delay) forwards;
+}
+
+/* Mostramos el número de puntos en el marcador. */
+#score:before {
+  content: counter(points);
+}
+
+@keyframes bullseye-fadeout {
+  12% {
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes points-up {
+  10% {
+    transform: translate(-50%, calc(-50% - 3rem));
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes bullseye-movement {
+  100% {
+    transform: translateY(calc(102vh + var(--bullseye-total-size)));
+  }
+}
+
+@keyframes score-end {
+  100% {
+    transform: translateY(calc(100% - 50vh)) scale(2.2);
+  }
+}
+
+@keyframes pulse {
+  30% {
+    opacity: 0;
+  }
+  60% {
+    opacity: 1;
+  }
+}
