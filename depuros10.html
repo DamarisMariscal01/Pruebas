@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>De puros 10</title>
+    <link rel="stylesheet" href="./multiplicacion.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <script src="./multiplicacion.js"></script>
+  </head>
+
+  <body>
+    <header>
+      <nav>
+        <a target="_blank" href="https://la.ixl.com/?partner=google&campaign=1748097747&adGroup=71330014787&gclid=EAIaIQobChMImIeS7ISe6gIVTCk_Ch1IjQfDEAEYASAAEgKdI_D_BwE"><button type="button" name="button">Links para páginas de matemáticas</button></a>
+        <a target="_blank" href="https://www.youtube.com/user/JAKEMATHE1/videos"> <button type="button" name="button">Videos de matemáticas</button></a>
+        <a target="_blank" href="https://www.mundoprimaria.com/juegos-educativos/juegos-matematicas"> <button type="button" name="button">Juegos en línea de mate</button></a>
+        <a target="_blank" href="https://aprendiendomatematicas.com/los-mejores-libros-de-matematicas-para-infantil-primaria/"> <button type="button" name="button">Libros para comprar</button></a>
+      </nav>
+      <section class="inicio">
+        <h1>De puros 10</h1>
+        <p>Esta página es una página recreativa, es especializada para niños de 1° a 4° de primaria, ya que es un lugar en el cual los estudiantes aprenden, y a la vez se divierten a la hora de aprender matemáticas.</p>
+      </section >
+    </header>
+
+
+    <section class="ejercicios">
+      <h3>Ejercicios que puedes hacer</h3><h5>(Pícale a los botones para más ejercicios)</h5>
+
+      <p>
+        <button type="button" name="button" onclick="mostrarM()">Multiplicaciones</button>
+        <button type="button" name="button" onclick="mostrarS()">Sumas</button>
+        <button type="button" name="button" onclick="mostrarR()">Restas</button>
+      </p>
+
+
+
+      <div id="multiplicaciones">
+        <div class="contenedor">
+          <p id="numero1M"> 5 </p>
+          <p> X </p>
+          <p id="numero2M"> 2 </p>
+          <p> = </p>
+          <input id="numUsuarioM" type="text">
+          <button onclick="comprobarMulti();">Comprobar</button>
+        </div>
+        <button type="button" name="button" onclick="examenM()">Examen rápido</button>
+      </div>
+
+      <div id="testM">
+        <div class="preguntas">
+          <p>Pregunta</p>
+          <p id="numPreguntaM">1</p>
+          <p>de</p>
+          <p>5</p>
+        </div>
+        <div class="contenedor" id="espacioM">
+          <p id="test1m"> 5 </p>
+          <p> X </p>
+          <p id="test2m"> 2 </p>
+          <p> = </p>
+          <input id="usuarioTestM" type="text">
+          <button onclick="calificarM();" id="siguienteM">Siguiente</button>
+        </div>
+        <div class="preguntas" id="contenedorCM">
+          <p>Tu calificación es:</p>
+          <p id="caliM"></p>
+        </div>
+        <button type="button" name="button" id="mostrarCM" onclick="mostrarCaliM()">Mostrar Calificaciones</button>
+      </div>
+
+
+
+      <div id="sumas">
+        <div class="contenedor">
+          <p id="numero1S"> 10 </p>
+          <p> + </p>
+          <p id="numero2S"> 7 </p>
+          <p> = </p>
+          <input id="numUsuarioS" type="text">
+          <button onclick="comprobarSuma();">Comprobar</button>
+        </div>
+          <button type="button" name="button" onclick="examenS()">Examen rápido</button>
+      </div>
+
+      <div id="testS">
+        <div class="preguntas">
+          <p>Pregunta</p>
+          <p id="numPreguntaS">1</p>
+          <p>de</p>
+          <p>5</p>
+        </div>
+        <div class="contenedor" id="espacioS">
+          <p id="test1s"> 5 </p>
+          <p> + </p>
+          <p id="test2s"> 2 </p>
+          <p> = </p>
+          <input id="usuarioTestS" type="text">
+          <button onclick="calificarS();" id="siguienteS">Siguiente</button>
+        </div>
+        <div class="preguntas" id="contenedorCS">
+          <p>Tu calificación es:</p>
+          <p id="calS"></p>
+        </div>
+        <button type="button" name="button" id="mostrarCS" onclick="mostrarCaliS()">Mostrar Calificaciones</button>
+      </div>
+
+
+
+      <div id="restas">
+        <div class="contenedor">
+          <p id="numero1R"> 9 </p>
+          <p> - </p>
+          <p id="numero2R"> 3 </p>
+          <p> = </p>
+          <input id="numUsuarioR" type="text">
+          <button onclick="comprobarResta();">Comprobar</button>
+        </div>
+        <button type="button" name="button" onclick="examenR()">Examen rápido</button>
+      </div>
+
+      <div id="testR">
+        <div class="preguntas">
+          <p>Pregunta</p>
+          <p id="numPreguntaR">1</p>
+          <p>de</p>
+          <p>5</p>
+        </div>
+        <div class="contenedor" id="espacioR">
+          <p id="test1r"> 5 </p>
+          <p> - </p>
+          <p id="test2r"> 2 </p>
+          <p> = </p>
+          <input id="usuarioTestR" type="text">
+          <button onclick="calificarR();" id="siguienteR">Siguiente</button>
+        </div>
+        <div class="preguntas" id="contenedorCR">
+          <p>Tu calificación es:</p>
+          <p id="calR"></p>
+        </div>
+        <button type="button" name="button" id="mostrarCR" onclick="mostrarCaliR()">Mostrar Calificaciones</button>
+      </div>
+    </section>
+
+
+  </body>
+</html>
